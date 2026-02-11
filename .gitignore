@@ -43,4 +43,5 @@ next-env.d.ts
 # Markdown files
 *.md
 !README.md
+!VERCEL.md
 !knowledge/*.md
