@@ -167,35 +167,34 @@ export default function ChatWidget() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="fixed bottom-24 right-6 z-50 w-96 h-[600px] rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+                        className="fixed bottom-24 right-6 z-50 w-96 h-[600px] rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-slate-200"
                         style={{
-                            background: 'rgba(15, 23, 42, 0.8)',
-                            backdropFilter: 'blur(20px)',
-                            border: '1px solid rgba(255, 255, 255, 0.1)'
+                            background: 'rgba(255, 255, 255, 0.98)',
+                            backdropFilter: 'blur(10px)',
                         }}
                     >
                         {/* Header */}
-                        <div className="bg-gradient-to-r from-blue-600/50 to-purple-700/50 backdrop-blur-md p-4 border-b border-white/10 flex justify-between items-center">
+                        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 border-b border-slate-100 flex justify-between items-center shadow-sm">
                             <div className="flex items-center gap-3">
                                 <motion.div
                                     animate={isLoading ? { scale: [1, 1.1, 1] } : {}}
                                     transition={{ repeat: Infinity, duration: 2 }}
-                                    className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-2xl"
+                                    className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-2xl shadow-sm"
                                 >
                                     🤖
                                 </motion.div>
                                 <div>
                                     <h3 className="font-semibold text-white">NexusBot</h3>
                                     <div className="flex items-center gap-1.5">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
-                                        <p className="text-[10px] uppercase tracking-wider text-white/60 font-medium">Online Assistant</p>
+                                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                                        <p className="text-[10px] uppercase tracking-wider text-blue-100 font-bold">Online Assistant</p>
                                     </div>
                                 </div>
                             </div>
                             {messages.length > 0 && (
                                 <button
                                     onClick={handleClearChat}
-                                    className="text-white/40 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-lg"
+                                    className="text-white/60 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg"
                                     title="Clear conversation"
                                 >
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -213,13 +212,13 @@ export default function ChatWidget() {
                                     animate={{ opacity: 1 }}
                                     className="h-full flex flex-col items-center justify-center text-center px-4"
                                 >
-                                    <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-blue-500/20 to-purple-600/20 flex items-center justify-center text-4xl mb-6 border border-white/10">
+                                    <div className="w-16 h-16 rounded-3xl bg-slate-50 flex items-center justify-center text-4xl mb-6 shadow-sm border border-slate-100">
                                         🤖
                                     </div>
-                                    <h4 className="text-white font-semibold mb-2 text-lg">Hello! I'm NexusBot</h4>
-                                    <p className="text-white/40 text-sm mb-8 leading-relaxed">
-                                        I can help you with anything related to our platform.
-                                        Check out some common topics below:
+                                    <h4 className="text-slate-800 font-bold mb-2 text-xl">Hello! I'm NexusBot</h4>
+                                    <p className="text-slate-500 text-sm mb-8 leading-relaxed max-w-[240px]">
+                                        I can help you with anything related to our community.
+                                        Try asking about:
                                     </p>
 
                                     <div className="grid grid-cols-1 gap-2 w-full">
@@ -230,9 +229,9 @@ export default function ChatWidget() {
                                                 animate={{ opacity: 1, x: 0 }}
                                                 transition={{ delay: 0.1 * i }}
                                                 onClick={() => handleSuggestedClick(q)}
-                                                className="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 text-sm transition-all hover:border-blue-500/30 group"
+                                                className="text-left px-4 py-3 rounded-xl bg-white hover:bg-blue-50 border border-slate-200 text-slate-700 text-sm transition-all hover:border-blue-300 hover:shadow-sm group"
                                             >
-                                                <span className="group-hover:text-blue-400 transition-colors">{q}</span>
+                                                <span className="group-hover:text-blue-600 transition-colors">{q}</span>
                                             </motion.button>
                                         ))}
                                     </div>
@@ -247,13 +246,13 @@ export default function ChatWidget() {
                                     className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                                 >
                                     <div
-                                        className={`max-w-[85%] rounded-2xl p-3 shadow-lg ${message.role === 'user'
-                                            ? 'bg-blue-600 text-white rounded-tr-none'
-                                            : 'bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-tl-none'
+                                        className={`max-w-[85%] rounded-2xl p-3 shadow-sm ${message.role === 'user'
+                                            ? 'bg-blue-600 text-white rounded-tr-none shadow-blue-200'
+                                            : 'bg-slate-100 text-slate-800 border border-slate-200 rounded-tl-none'
                                             }`}
                                     >
                                         <div
-                                            className="text-sm prose prose-invert prose-sm max-w-none break-words"
+                                            className={`text-sm prose prose-sm max-w-none break-words ${message.role === 'user' ? 'prose-invert' : ''}`}
                                             dangerouslySetInnerHTML={{
                                                 __html: message.role === 'assistant'
                                                     ? marked.parse(message.content)
@@ -262,20 +261,20 @@ export default function ChatWidget() {
                                         />
 
                                         {message.sources && message.sources.length > 0 && (
-                                            <div className="mt-3 pt-3 border-t border-white/10">
+                                            <div className="mt-3 pt-3 border-t border-slate-200">
                                                 <div className="flex items-center gap-1.5 mb-2">
-                                                    <svg className="w-3 h-3 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <svg className="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                     </svg>
-                                                    <span className="text-[10px] uppercase font-bold tracking-widest text-white/30">Verified Sources</span>
+                                                    <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400">Verified Sources</span>
                                                 </div>
                                                 <div className="flex flex-wrap gap-1.5">
                                                     {Array.from(new Set(message.sources.map(s => s.file))).map((sourceFile, idx) => {
                                                         const source = message.sources?.find(s => s.file === sourceFile);
                                                         return (
-                                                            <div key={idx} className="flex items-center gap-1 px-2 py-1 rounded bg-white/5 border border-white/10">
-                                                                <span className="text-[10px] text-white/50">📄</span>
-                                                                <span className="text-[10px] text-white/70 font-medium truncate max-w-[120px]">
+                                                            <div key={idx} className="flex items-center gap-1 px-2 py-1 rounded bg-white shadow-sm border border-slate-200">
+                                                                <span className="text-[10px]">📄</span>
+                                                                <span className="text-[10px] text-slate-600 font-bold truncate max-w-[120px]">
                                                                     {source?.title.split(' - ')[0]}
                                                                 </span>
                                                             </div>
@@ -294,21 +293,21 @@ export default function ChatWidget() {
                                     animate={{ opacity: 1 }}
                                     className="flex justify-start"
                                 >
-                                    <div className="bg-white/10 backdrop-blur-md rounded-2xl px-4 py-3 border border-white/20 rounded-tl-none flex items-center gap-1">
+                                    <div className="bg-slate-100 rounded-2xl px-4 py-3 border border-slate-200 rounded-tl-none flex items-center gap-1">
                                         <motion.span
                                             animate={{ opacity: [0.4, 1, 0.4] }}
                                             transition={{ repeat: Infinity, duration: 1.4, delay: 0 }}
-                                            className="w-1.5 h-1.5 bg-white/60 rounded-full"
+                                            className="w-1.5 h-1.5 bg-slate-400 rounded-full"
                                         />
                                         <motion.span
                                             animate={{ opacity: [0.4, 1, 0.4] }}
                                             transition={{ repeat: Infinity, duration: 1.4, delay: 0.2 }}
-                                            className="w-1.5 h-1.5 bg-white/60 rounded-full"
+                                            className="w-1.5 h-1.5 bg-slate-400 rounded-full"
                                         />
                                         <motion.span
                                             animate={{ opacity: [0.4, 1, 0.4] }}
                                             transition={{ repeat: Infinity, duration: 1.4, delay: 0.4 }}
-                                            className="w-1.5 h-1.5 bg-white/60 rounded-full"
+                                            className="w-1.5 h-1.5 bg-slate-400 rounded-full"
                                         />
                                     </div>
                                 </motion.div>
@@ -318,14 +317,14 @@ export default function ChatWidget() {
                         </div>
 
                         {/* Input Area */}
-                        <div className="p-4 bg-white/5 border-t border-white/10">
+                        <div className="p-4 bg-slate-50/50 border-t border-slate-100">
                             <form onSubmit={handleSubmit} className="flex gap-2">
                                 <input
                                     type="text"
                                     value={input}
                                     onChange={(e) => setInput(e.target.value)}
                                     placeholder="Type your question..."
-                                    className="flex-1 bg-white/10 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all shadow-inner"
+                                    className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-slate-700 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all shadow-sm"
                                     disabled={isLoading}
                                 />
                                 <motion.button
@@ -333,14 +332,14 @@ export default function ChatWidget() {
                                     disabled={isLoading || !input.trim()}
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    className="bg-blue-600 hover:bg-blue-500 text-white rounded-xl px-3.5 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-lg shadow-blue-500/20"
+                                    className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-3.5 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md shadow-blue-500/10"
                                 >
                                     <svg className="w-5 h-5 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                                     </svg>
                                 </motion.button>
                             </form>
-                            <p className="text-[9px] text-center text-white/20 mt-3 font-medium tracking-tight">
+                            <p className="text-[9px] text-center text-slate-400 mt-3 font-semibold tracking-wide uppercase">
                                 Powered by NexusBot RAG • Grounded in verified content
                             </p>
                         </div>
